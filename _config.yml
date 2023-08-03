@@ -4,7 +4,7 @@
 
 # Site
 title: "Yeedrag's website :D"
-subtitle: '1'
+subtitle: ''
 description: 'A nobody trying to become somebody'
 keywords:
 author: Yeedrag
@@ -102,4 +102,4 @@ theme: butterfly
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
