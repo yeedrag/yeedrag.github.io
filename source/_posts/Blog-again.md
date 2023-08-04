@@ -29,8 +29,8 @@ An idea one may think of is to greedily drink potions whenever you have the hp, 
 
 6
 4 -4 1 -3 1 -3
-With pure greedy, you would drink 1, 2, 3, 5, in total 5 potions.
-But you can actually drink 1, 3, 4, 5, 6, in total 6 potions.
+With pure greedy, you would drink 1, 2, 3, 5, in total 4 potions.
+But you can actually drink 1, 3, 4, 5, 6, in total 5 potions.
 
 A important idea used in this problem is also used similarly in doing LIS (Longest Increasing Subsequence) in $O(nlogn)$:
 We want to try having as much hp as possible while having the maximum amount of potions drank in any timestep!
