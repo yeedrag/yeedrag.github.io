@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -104,3 +104,17 @@ theme: butterfly
 deploy:
   type: git
   repo: https://github.com/yeedrag/yeedrag.github.io
+
+
+# from https://nickxu.me/2022/04/17/Hexo-Butterfly-建站指南（八）使用-KaTeX-数学公式/index.html
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+  plugins:
+  anchors:
+    level: 1
+    collisionSuffix: ''

@@ -1,7 +1,7 @@
 ---
 title: Blog...again?
 date: 2023-08-04 02:10:50
-tags:
+tags: ["Life", "CP"]
 cover: transparent
 ---
 Hello again!
@@ -16,7 +16,7 @@ I'll try to get it running sometime!
 I hope to share some coding related stuff or stuff that happened in my daily life, who knows?
 
 To end this off, Im going to show you my favorite problem in CF when I first started: [1526C2. Potions (Hard Version)](https://codeforces.com/problemset/problem/1526/C2)
-When I just started coding, I was stuck at this problem for so long. 
+When I just started coding, I was stuck at this problem for so long.
 I thought I couldn't solve it because it was 1600 (I was <1000 then),
 But after hard thinking, I finally solved this problem and I was super proud of myself.
 The problem has an easy and a hard version with the only difference being $n \leq 2000$ and $n \leq 200000$.
@@ -27,8 +27,9 @@ It's obvious that we just drink it, as there are no downsides to greedily drink 
 Now the tricky part: When a potion is negative i.e. drinking it deducts hp.
 An idea one may think of is to greedily drink potions whenever you have the hp, which can be proved wrong with this example:
 
-6
-4 -4 1 -3 1 -3
+> 6
+> 4 -4 1 -3 1 -3
+
 With pure greedy, you would drink 1, 2, 3, 5, in total 4 potions.
 But you can actually drink 1, 3, 4, 5, 6, in total 5 potions.
 
@@ -75,5 +76,7 @@ void solve() {
     return;
 }
 ```
+
+Time Complexity: $O(nlogn)$
 
 Pretty nice question right?
