@@ -5,6 +5,7 @@ tags: ["CP"]
 ---
 While I was doing random 1700~2000 problem, I noticed one problem was the problem I did two years ago when I our club was choosing committee members. I was the only one that got full points in this problem!
 Now I revise this problem two years later, it was actually really easy. But 2021 yeedrag tried for nearly 3 days and dozens of attempts to get it accepted!
+The problem: [1486C2 Guessing the Greatest (hard version)](https://codeforces.com/contest/1486/problem/C2)
 Here is a comparison of the code for the same problem I wrote two years apart:
 2021-05-25 code:
 
