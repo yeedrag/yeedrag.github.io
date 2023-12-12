@@ -88,7 +88,7 @@ The problem is basically as follows:
 
 Honestly not sure why this question is rated 1500...
 
-The idea is really simple: Maintain a array $pre$, where $pre_i = 3^i + 3^{i-1} + ... + 3^0$.
+The idea is really simple: Maintain an array $pre$, where $pre_i = 3^i + 3^{i-1} + ... + 3^0$.
 You want to find the one that is greater or equal to $n$, and from large to small greedily remove powers of 3 if possible.
 
 Code

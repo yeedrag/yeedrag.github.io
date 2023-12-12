@@ -46,7 +46,7 @@ Another example is from $2$ to $3$, where green is the depth when $2$ is the roo
 
 Denote $dp[i]$ as the answer with $i$ as the root, then
 
-$dp[v] = dp[u] + (n - subtree[v]) - subtree[v] = dp[u] + n - (2 * subtree[v])$
+$$dp[v] = dp[u] + (n - subtree[v]) - subtree[v] = dp[u] + n - (2 \cdot subtree[v])$$
 
 With $dp[0] = sum[0]$. We can do this transition with another dfs.
 
@@ -123,9 +123,9 @@ Now, $dp_2[root] = 1$, how about others?
 
 ![subtree3](subtreecomp2.png)
 
-$dp_2[2]$ is cricled in red, and $dp_2[3]$ is circled in green. We can see that $dp[3]$ added the nodes that were in the subtree before, but not in the current subtree, which is all the siblings off 3. We can write out the transision as:
+$dp_2[2]$ is cricled in red, and $dp_2[3]$ is circled in green. We can see that $dp[3]$ added the nodes that were in the subtree before, but not in the current subtree, which is all the siblings of 3. We can write out the transision as:
 
-$\displaystyle dp_2[v] = dp_2[u] \cdot (\sum_{c, c \neq v} dp_1[c]) + 1 = dp_2[u] \cdot (\frac{dp_1[u] - 1}{dp_1[v]}) + 1$
+$$\displaystyle dp_2[v] = dp_2[u] \cdot (\sum_{c, c \neq v} dp_1[c]) + 1 = dp_2[u] \cdot (\frac{dp_1[u] - 1}{dp_1[v]}) + 1$$
 (I again, want you to try relating this transition to what we did with $dp_1$)
 Which unfortunately, the first one would TLE, and we cannot do the second one because of modular division (and $m$ isn't guaranteed to be prime so it's hard to find inverse).
 
@@ -237,3 +237,100 @@ vector<int> ans;
 for(int i = 0; i < n; i++) ans.push_back(dp[i] + dp2[i]);
 return ans;
 ```
+
+Now, let's actually solve the problem I was stuck in contest.
+
+## [CF 1882D. Tree XOR](https://codeforces.com/contest/1882/problem/D)
+
+Let's first think about how to obtain the answer for the root.
+From our root, we can greedily change every child $v$ into the value our root has with $(val[u] ⊕ val[v]) ⊕ subtree[v]$.
+We also need to remember that the nodes after the child $c$ also changed to $(val[u] ⊕ val[v]) ⊕ val[c]$ when calculating.
+Let's denote the value that we want to apply to the $subtree[u]$ as $xor\_val[u]$, which $xor\_val[root]$ is 0.
+calulating $xor\_val$ during dfs is quite easy: $xor\_val[v] = (xor\_val[u] ⊕ val[v]) ⊕ val[1]$.
+But there is acutally a pretty nice observation here:
+
+![treexor](treexor.jpg)
+
+The part circled in yellow is the original value after the operation on node $2$, and the red part is the value after node $4$.
+The value of every $xor\_val[v]$ is just $val[u] ⊕ val[v]$!
+This tells us the value to apply does not change with the root, which makes our lives much easier.
+So, the first part of dfs should look like this:
+
+```cpp
+function<void(int, int)> dfs1 = [&](int u, int p) {
+    for(auto v : graph[u]) {
+        if(v != p) {
+            xor_val[v] = (val[u] ^ val[v]);
+            //xor_val[v] = (xor_val[u] ^ val[v]) ^ val[1];
+            dfs1(v, u);
+            subtree[u] += subtree[v];
+        }
+    }
+    subtree[u] += 1;
+};
+```
+
+and $ans[root] = \sum_{i = 1}^{n} xor\_val[i] \cdot subtree[i]$.
+
+Now, for the rerooting part:
+
+$(xor\_val[i] \cdot subtree[i])$ does not change with the root. The only changing ones are the current root ($u$), and the next child ($v$).
+
+$u$ will become the child of $v$, so $xor\_val[u] = val[v] ⊕ val[u] = xor\_val[v]$, and the subtree size is just $n - subtree[v]$.
+For $v$, $(xor\_val[v] \cdot subtree[v])$ is just $0$ since it's the new root.
+Combine them together, we have the following transition:
+$$ans[v] = ans[u] + (xor\_val[v] \cdot (n - subtree[v])) - (xor\_val[v] \cdot subtree[v])$$
+Which equals
+$$ans[v] = ans[u] + xor\_val[v] \cdot (2 \cdot subtree[v])$$
+
+Code:
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> val(n + 1, 0);
+    for(int i = 1; i <= n; i++) {
+        cin >> val[i];
+    }
+    vector<int> graph[n + 1];
+    for(int i = 0; i < n - 1; i++) {
+        int x, y;
+        cin >> x >> y;
+        graph[x].pb(y);
+        graph[y].pb(x);
+    }
+    vector<int> dp1(n + 1, 0);
+    vector<int> subtree(n + 1, 0);
+    vector<int> xor_val(n + 1, 0);
+    xor_val[1] = 0;
+    function<void(int, int)> dfs1 = [&](int u, int p) {
+        for(auto v : graph[u]) {
+            if(v != p) {
+                xor_val[v] = (val[u] ^ val[v]);
+                //xor_val[v] = (xor_val[u] ^ val[v]) ^ val[1];
+                dfs1(v, u);
+                subtree[u] += subtree[v];
+            }
+        }
+        subtree[u] += 1;
+    };
+    dfs1(1, -1);
+    vi ans(n + 1);
+    for(int i = 1; i <= n; i++) ans[1] += (xor_val[i] * subtree[i]);
+    function<void(int, int)> dfs2 = [&](int u, int p) {
+        for(auto v : graph[u]) {
+            if(v != p) {
+                ans[v] = ans[u] + xor_val[v] * (n - (2 * subtree[v]));
+                dfs2(v, u);
+            }
+        }
+    };
+    dfs2(1, -1);
+    for(int i = 1; i <= n; i++) cout << ans[i] << " ";
+    cout << endl;
+    return;
+}
+```
+
+Time Complexity: $O(n)$
