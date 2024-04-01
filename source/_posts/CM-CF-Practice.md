@@ -14,57 +14,57 @@ The high level idea for this problem is to find how many slimes we need to accum
 The tricky part about this problem is dealing with duplicate values in the same row, as they technically cannot eat each other, and it cause alot of problems while implementing.
 
 ```cpp
-	void solve() {
-		int n;
-		cin >> n;
-		vi v(n + 1, 0);
-		for(int i = 1; i <= n; i++) cin >> v[i];
-		int curnum = v[1], k = 1;
-		int val[n + 1][2];
-		for(int i = 0; i <= n; i++) {
-			for(int j = 0; j <= 1; j++) {
-				val[i][j] = -1;
-			}
-		}
-		for(int t = 0; t <= 1; t++) {
-			vi pre(n + 1, 0);
-			for(int i = 1; i <= n; i++) {
-				pre[i] = pre[i - 1] + v[i];
-			}
-			//debug(pre);
-			for(int i = 2; i <= n; i++) {
-				int l = 0, r = i - k - 2;
-				if(!(r < l || pre[i - 1] - pre[l] <= v[i])) {
-					while(r - l > 1) {
-						int m = (r + l) >> 1;
-						if(pre[i - 1] - pre[m] > v[i]) l = m;
-						else r = m - 1; 
-					}
-					if(pre[i - 1] - pre[r] > v[i]) val[i][t] = i - (r + 1);
-					else val[i][t] = i - (l + 1);
-				}
-				if(v[i - 1] > v[i]) val[i][t] = 1;
-				if(v[i] != curnum) {
-					k = 1;
-					curnum = v[i];
-				} else {
-					k += 1;
-				}
-			}
-			reverse(v.begin() + 1, v.end());
-		}
-		for(int i = 1; i <= n; i++) {
-			if(val[i][0] == -1 && val[n - i + 1][1] == -1) {
-				cout << -1 << " ";
-			} else if(val[i][0] == -1 || val[n - i + 1][1] == -1) {
-				cout << max(val[i][0], val[n - i + 1][1]) << " ";
-			} else {
-				cout << min(val[i][0], val[n - i + 1][1]) << " ";
-			}
-		}
-		cout << endl;
-		return;
-	}
+    void solve() {
+        int n;
+        cin >> n;
+        vi v(n + 1, 0);
+        for(int i = 1; i <= n; i++) cin >> v[i];
+        int curnum = v[1], k = 1;
+        int val[n + 1][2];
+        for(int i = 0; i <= n; i++) {
+            for(int j = 0; j <= 1; j++) {
+                val[i][j] = -1;
+            }
+        }
+        for(int t = 0; t <= 1; t++) {
+            vi pre(n + 1, 0);
+            for(int i = 1; i <= n; i++) {
+                pre[i] = pre[i - 1] + v[i];
+            }
+            //debug(pre);
+            for(int i = 2; i <= n; i++) {
+                int l = 0, r = i - k - 2;
+                if(!(r < l || pre[i - 1] - pre[l] <= v[i])) {
+                    while(r - l > 1) {
+                        int m = (r + l) >> 1;
+                        if(pre[i - 1] - pre[m] > v[i]) l = m;
+                        else r = m - 1; 
+                    }
+                    if(pre[i - 1] - pre[r] > v[i]) val[i][t] = i - (r + 1);
+                    else val[i][t] = i - (l + 1);
+                }
+                if(v[i - 1] > v[i]) val[i][t] = 1;
+                if(v[i] != curnum) {
+                    k = 1;
+                    curnum = v[i];
+                } else {
+                    k += 1;
+                }
+            }
+            reverse(v.begin() + 1, v.end());
+        }
+        for(int i = 1; i <= n; i++) {
+            if(val[i][0] == -1 && val[n - i + 1][1] == -1) {
+                cout << -1 << " ";
+            } else if(val[i][0] == -1 || val[n - i + 1][1] == -1) {
+                cout << max(val[i][0], val[n - i + 1][1]) << " ";
+            } else {
+                cout << min(val[i][0], val[n - i + 1][1]) << " ";
+            }
+        }
+        cout << endl;
+        return;
+    }
 ```
 
 Time complexity: $O(nlogn)$
@@ -73,7 +73,7 @@ Time complexity: $O(nlogn)$
 
 This problem honestly does not deserve 1900, I solve it in like 15 minutes max.
 
-If the number of edges on the node 1 is less then $D$, then the answer is clearly no. Else, we want to first find "crutial edges", which are edges connected to the node 1 that must be connected in order for the whole graph to be connected. 
+If the number of edges on the node 1 is less then $D$, then the answer is clearly no. Else, we want to first find "crutial edges", which are edges connected to the node 1 that must be connected in order for the whole graph to be connected.
 
 We can find these edges by first doing our process of building a spanning tree while skipping all edges that connects to 1. After that it's easy to find edges that we must form to connect the whole graph.
 
@@ -104,76 +104,77 @@ void init(int n) {
     }
 }
 void solve() {
-	int n, m, d;
-	cin >> n >> m >> d;
-	init(n + 1);
-	int total = 0;
-	vector<pii> v;
-	for(int i = 0; i < m; i++) {
-		int a, b;
-		cin >> a >> b;
-		if(a == 1 || b == 1) total += 1;
-		v.pb({a, b});
-	}
-	for(auto [a, b] : v) {
-		if(a == 1 || b == 1) {
-			continue;
-		} else {
-			modify(a, b);
-		}
-	}
-	vector<bool> usedhead(n + 1, false);
-	int need = 0;
-	vector<pii> v2;
-	vector<pii> v3;
-	for(auto [a, b] : v) {
-		if(a == 1) {
-			if(usedhead[find(b)] == false) {
-				need += 1;
-				usedhead[find(b)] = true;
-				v2.pb({a, b});
-			} else {
-				v3.pb({a, b});
-			}
-		} else if(b == 1) {
-			if(usedhead[find(a)] == false) {
-				need += 1;
-				usedhead[find(a)] = true;
-				v2.pb({a, b});
-			} else {
-				v3.pb({a, b});
-			}		
-		}
-	}	
-	if(need > d || total < d) {
-		cout << "NO" << endl;
-		return;
-	}
-	cout << "YES" << endl;
-	init(n + 1);
-	for(auto [a, b] : v2) {
-		cout << a << " " << b << endl;
-		modify(a, b);
-	}
-	for(int i = 0; i < d - need; i++) {
-		cout << v3[i].first << " " << v3[i].second << endl;
-		modify(v3[i].first, v3[i].second);
-	}
-	for(auto [a, b] : v) {
-		if(a == 1 || b == 1) {
-			continue;
-		}
-		if(find(a) != find(b)) {
-			cout << a << " " << b << endl;
-			modify(a, b);
-		}
-	}
-	return;
+    int n, m, d;
+    cin >> n >> m >> d;
+    init(n + 1);
+    int total = 0;
+    vector<pii> v;
+    for(int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        if(a == 1 || b == 1) total += 1;
+        v.pb({a, b});
+    }
+    for(auto [a, b] : v) {
+        if(a == 1 || b == 1) {
+            continue;
+        } else {
+            modify(a, b);
+        }
+    }
+    vector<bool> usedhead(n + 1, false);
+    int need = 0;
+    vector<pii> v2;
+    vector<pii> v3;
+    for(auto [a, b] : v) {
+        if(a == 1) {
+            if(usedhead[find(b)] == false) {
+                need += 1;
+                usedhead[find(b)] = true;
+                v2.pb({a, b});
+            } else {
+                v3.pb({a, b});
+            }
+        } else if(b == 1) {
+            if(usedhead[find(a)] == false) {
+                need += 1;
+                usedhead[find(a)] = true;
+                v2.pb({a, b});
+            } else {
+                v3.pb({a, b});
+            }
+        }
+    }
+    if(need > d || total < d) {
+        cout << "NO" << endl;
+        return;
+    }
+    cout << "YES" << endl;
+    init(n + 1);
+    for(auto [a, b] : v2) {
+        cout << a << " " << b << endl;
+        modify(a, b);
+    }
+    for(int i = 0; i < d - need; i++) {
+        cout << v3[i].first << " " << v3[i].second << endl;
+        modify(v3[i].first, v3[i].second);
+    }
+    for(auto [a, b] : v) {
+        if(a == 1 || b == 1) {
+            continue;
+        }
+        if(find(a) != find(b)) {
+            cout << a << " " << b << endl;
+            modify(a, b);
+        }
+    }
+    return;
 }
 ```
+
 Time complexity: $O(n)$
 
-## [CF 1141G. Privatization of Roads in Treeland (1900)](https://codeforces.com/contest/1141/problem/G)   
+## [CF 1141G. Privatization of Roads in Treeland (1900)](https://codeforces.com/contest/1141/problem/G)
 
 Another problem I don't feel like it's 1900.
 
@@ -191,67 +192,67 @@ vi color(MAXN, 0);
 int root = -1;
 int colnum = MAXN;
 void dfs(int cur, int pre) {
-	if(graph[cur].size() == 1) root = cur;
-	deg[graph[cur].size()] += 1;
-	for(auto [v, idx] : graph[cur]) {
-		if(v == pre) continue;
-		dfs(v, cur);
-	}
+    if(graph[cur].size() == 1) root = cur;
+    deg[graph[cur].size()] += 1;
+    for(auto [v, idx] : graph[cur]) {
+        if(v == pre) continue;
+        dfs(v, cur);
+    }
 }
 void dfs2(int cur, int pre, int precol) {
-	if(graph[cur].size() <= colnum) {
-		int c = 1;
-		for(auto [v, idx] : graph[cur]) {	
-			if(v == pre) continue;
-			if(c == precol) c++;
-			color[idx] = c;
-			c++;
-			dfs2(v, cur, color[idx]);
-		}	
-	} else {
-		for(auto [v, idx] : graph[cur]) {
-			if(v == pre) continue;
-			color[idx] = precol;
-			dfs2(v, cur, color[idx]);
-		}
-	}
+    if(graph[cur].size() <= colnum) {
+        int c = 1;
+        for(auto [v, idx] : graph[cur]) {
+            if(v == pre) continue;
+            if(c == precol) c++;
+            color[idx] = c;
+            c++;
+            dfs2(v, cur, color[idx]);
+        }
+    } else {
+        for(auto [v, idx] : graph[cur]) {
+            if(v == pre) continue;
+            color[idx] = precol;
+            dfs2(v, cur, color[idx]);
+        }
+    }
 }
 void solve() {
-	int n, k;
-	cin >> n >> k;
-	for(int i = 0; i <= n + 1; i++) {
-		graph[i].clear();
-		deg[i] = 0;
-		color[i] = 0;
-	}
-	colnum = MAXN;
-	for(int i = 0; i < n - 1; i++) {
-		int a, b;
-		cin >> a >> b;
-		graph[a].pb({b, i});
-		graph[b].pb({a, i});
-	}
-	dfs(1, -1);
-	for(int i = n; i >= 1; i--) {
-		deg[i] += deg[i + 1];
-		colnum = i;
-		if(deg[i] > k) {
-			break;
-		}
-	}
-	dfs2(root, -1, -1);
-	cout << colnum << endl;
-	for(int i = 0; i <= n - 2; i++) {
-		cout << color[i] << " ";
-	}
-	cout << endl;
-	return;	
+    int n, k;
+    cin >> n >> k;
+    for(int i = 0; i <= n + 1; i++) {
+        graph[i].clear();
+        deg[i] = 0;
+        color[i] = 0;
+    }
+    colnum = MAXN;
+    for(int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        graph[a].pb({b, i});
+        graph[b].pb({a, i});
+    }
+    dfs(1, -1);
+    for(int i = n; i >= 1; i--) {
+        deg[i] += deg[i + 1];
+        colnum = i;
+        if(deg[i] > k) {
+            break;
+        }
+    }
+    dfs2(root, -1, -1);
+    cout << colnum << endl;
+    for(int i = 0; i <= n - 2; i++) {
+        cout << color[i] << " ";
+    }
+    cout << endl;
+    return;
 }
 ```
 
 Time complexity: $O(n)$
 
-## [CF 1922D. Berserk Monsters (1900)](https://codeforces.com/contest/1922/problem/D) 
+## [CF 1922D. Berserk Monsters (1900)](https://codeforces.com/contest/1922/problem/D)
 
 A not so difficult simulation problem.
 
@@ -265,68 +266,68 @@ vector<int> atk;
 vector<int> def;
 queue<int> q1, q2, q3;
 void solve() {
-	s.clear();
-	atk.clear();
-	def.clear();
-	while(q1.size()) q1.pop();
-	while(q2.size()) q2.pop();
-	while(q3.size()) q3.pop();
-	int n;
-	cin >> n;
-	for(int i = 0; i < n; i++) {
-		int tmp;
-		cin >> tmp;
-		atk.pb(tmp);
-		s.insert(i);
-		q1.push(i);
-	}
-	for(int i = 0; i < n; i++) {
-		int tmp;
-		cin >> tmp;
-		def.pb(tmp);
-	}
-	while(n--) {
-		used.clear();
-		while(q1.size()) {
-			int fr = q1.front();
-			q1.pop();
-			queue<int> q;
-			auto it = s.find(fr);
-			int sum = 0;
-			if(it != s.begin()) {
-				q.push(*(prev(it, 1)));
-				sum += atk[*(prev(it, 1))];
-			}
-			if(next(it, 1) != s.end()) {
-				q.push(*(next(it, 1)));
-				sum += atk[*(next(it, 1))];
-			}
-			if(sum > def[*it]) {
-				q3.push(*it);
-				while(q.size()) {
-					q2.push(q.front());
-					q.pop();
-				}
-			}
-		}
-		cout << q3.size() << " ";
-		//debug(q3);
-		while(q3.size()) {
-			s.erase(q3.front());
-			q3.pop();
-		}
-		while(q2.size()) {
-			if(s.find(q2.front()) == s.end() || used.find(q2.front()) != used.end()) {
-				q2.pop();
-				continue;
-			}
-			used.insert(q2.front());
-			q1.push(q2.front());
-			q2.pop();
-		}
-	}
-	cout << endl;
-	return;
+    s.clear();
+    atk.clear();
+    def.clear();
+    while(q1.size()) q1.pop();
+    while(q2.size()) q2.pop();
+    while(q3.size()) q3.pop();
+    int n;
+    cin >> n;
+    for(int i = 0; i < n; i++) {
+        int tmp;
+        cin >> tmp;
+        atk.pb(tmp);
+        s.insert(i);
+        q1.push(i);
+    }
+    for(int i = 0; i < n; i++) {
+        int tmp;
+        cin >> tmp;
+        def.pb(tmp);
+    }
+    while(n--) {
+        used.clear();
+        while(q1.size()) {
+            int fr = q1.front();
+            q1.pop();
+            queue<int> q;
+            auto it = s.find(fr);
+            int sum = 0;
+            if(it != s.begin()) {
+                q.push(*(prev(it, 1)));
+                sum += atk[*(prev(it, 1))];
+            }
+            if(next(it, 1) != s.end()) {
+                q.push(*(next(it, 1)));
+                sum += atk[*(next(it, 1))];
+            }
+            if(sum > def[*it]) {
+                q3.push(*it);
+                while(q.size()) {
+                    q2.push(q.front());
+                    q.pop();
+                }
+            }
+        }
+        cout << q3.size() << " ";
+        //debug(q3);
+        while(q3.size()) {
+            s.erase(q3.front());
+            q3.pop();
+        }
+        while(q2.size()) {
+            if(s.find(q2.front()) == s.end() || used.find(q2.front()) != used.end()) {
+                q2.pop();
+                continue;
+            }
+            used.insert(q2.front());
+            q1.push(q2.front());
+            q2.pop();
+        }
+    }
+    cout << endl;
+    return;
 }
 ```
 
@@ -343,29 +344,29 @@ For some reason my implementation kept failing until I completely rewrote it and
 ```cpp
 string s;
 bool isgood(int l, int r) {
-	for(int l2 = l; l2 <= r; l2 ++) {
-		for(int i = 1; i <= 5 && l2 + 2 * i <= r; i++) {
-			if(s[l2] == s[l2 + i] && s[l2 + i] == s[l2 + (2 * i)]) {
-				return false;
-			}
-		}
-	}
-	return true;
+    for(int l2 = l; l2 <= r; l2 ++) {
+        for(int i = 1; i <= 5 && l2 + 2 * i <= r; i++) {
+            if(s[l2] == s[l2 + i] && s[l2 + i] == s[l2 + (2 * i)]) {
+                return false;
+            }
+        }
+    }
+    return true;
 } 
 void solve() {
-	cin >> s;
-	int ans = 0;
-	for(int l = 0; l < (int)(s.size()) - 2; l++) {
-		int mx = 0;
-		for(int r = l + 1; r < (int)s.size() && r < l + 10; r++) {
-			if(isgood(l, r)) {
-				mx = r;
-			}
-		}
-		ans += s.size() - (mx + 1);
-	}
-	cout << ans << endl;
-	return;
+    cin >> s;
+    int ans = 0;
+    for(int l = 0; l < (int)(s.size()) - 2; l++) {
+        int mx = 0;
+        for(int r = l + 1; r < (int)s.size() && r < l + 10; r++) {
+            if(isgood(l, r)) {
+                mx = r;
+            }
+        }
+        ans += s.size() - (mx + 1);
+    }
+    cout << ans << endl;
+    return;
 }
 ```
 
@@ -375,7 +376,7 @@ Time complexity: $O(nlogn)$
 
 Interesting problem, but has some points that made it a clear giveaway.
 
-First, notice in the queries that they want $v(l_i, r_i)$, so we must need some way to calculate $v(l_i, r_i)$ in $O(1)$ or $O(logn)$ time. 
+First, notice in the queries that they want $v(l_i, r_i)$, so we must need some way to calculate $v(l_i, r_i)$ in $O(1)$ or $O(logn)$ time.
 
 The second giveaway is the specific mod number 9. If you remember from middle school, the way to check if a number can be divided by 9 is to check if the sum of it's digits can also be divided by 9.
 
@@ -385,56 +386,56 @@ We can preprocess a prefix sum and preprocess the smallest (and second smallest)
 
 ```cpp
 void solve() {
-	string s;
-	cin >> s;
-	int w, m;
-	cin >> w >> m;
-	vi pre(s.size() + 1);
-	pre[0] = 0;
-	for(int i = 1; i <= s.size(); i++) {
-		pre[i] = pre[i - 1] + (s[i - 1] - '0');
-	}
-	int smallest[9];
-	int ssmallest[9];
-	for(int i = 0; i <= 8; i++) {
-		smallest[i] = -1;
-		ssmallest[i] = -1;
-	}
-	for(int i = 1; i + w - 1 <= s.size(); i++) {
-		int num = (pre[i + w - 1] - pre[i - 1]) % 9;
-		if(smallest[num] == -1) {
-			smallest[num] = i;
-		} else if(ssmallest[num] == -1) {
-			ssmallest[num] = i;
-		}
-	}
-	while(m--) {
-		int l, r, k;
-		cin >> l >> r >> k;
-		int num = (pre[r] - pre[l - 1]) % 9;
-		pii minans = {1e9, 1e9};
-		for(int i = 0; i <= 8; i++) {
-			for(int j = 0; j <= 8; j++) {
-				if(((i * num + j) % 9) == k) {
-					if(i != j) {
-						if(smallest[i] != -1 && smallest[j] != -1) {
-							minans = min(minans, {smallest[i], smallest[j]});
-						}
-					} else {
-						if(smallest[i] != -1 && ssmallest[j] != -1) {
-							minans = min(minans, {smallest[i], ssmallest[j]});
-						}
-					}
-				}
-			}
-		}
-		if(minans.first == 1e9) {
-			cout << -1 << " " << -1 << endl;
-		} else {
-			cout << minans.first << " " << minans.second << endl;
-		}
-	}
-	return;
+    string s;
+    cin >> s;
+    int w, m;
+    cin >> w >> m;
+    vi pre(s.size() + 1);
+    pre[0] = 0;
+    for(int i = 1; i <= s.size(); i++) {
+        pre[i] = pre[i - 1] + (s[i - 1] - '0');
+    }
+    int smallest[9];
+    int ssmallest[9];
+    for(int i = 0; i <= 8; i++) {
+        smallest[i] = -1;
+        ssmallest[i] = -1;
+    }
+    for(int i = 1; i + w - 1 <= s.size(); i++) {
+        int num = (pre[i + w - 1] - pre[i - 1]) % 9;
+        if(smallest[num] == -1) {
+            smallest[num] = i;
+        } else if(ssmallest[num] == -1) {
+            ssmallest[num] = i;
+        }
+    }
+    while(m--) {
+        int l, r, k;
+        cin >> l >> r >> k;
+        int num = (pre[r] - pre[l - 1]) % 9;
+        pii minans = {1e9, 1e9};
+        for(int i = 0; i <= 8; i++) {
+            for(int j = 0; j <= 8; j++) {
+                if(((i * num + j) % 9) == k) {
+                    if(i != j) {
+                        if(smallest[i] != -1 && smallest[j] != -1) {
+                            minans = min(minans, {smallest[i], smallest[j]});
+                        }
+                    } else {
+                        if(smallest[i] != -1 && ssmallest[j] != -1) {
+                            minans = min(minans, {smallest[i], ssmallest[j]});
+                        }
+                    }
+                }
+            }
+        }
+        if(minans.first == 1e9) {
+            cout << -1 << " " << -1 << endl;
+        } else {
+            cout << minans.first << " " << minans.second << endl;
+        }
+    }
+    return;
 }
 ```
 
@@ -442,7 +443,7 @@ Time complexity: $O(n)$ preprocess, $O(1)$ per query
 
 ## [CF 1791G2. Teleporters (Hard Version) (1900)](https://codeforces.com/contest/1791/problem/G2)
 
-Let's define the cost of a teleporter as $min(a_i + i, a_i + n + 1 - i)$, which is just the minimum cost of walking to it from the front or to the back. It's clear that after the initial teleporter, we will choose the teleporters based from lowest cost to highest cost. 
+Let's define the cost of a teleporter as $min(a_i + i, a_i + n + 1 - i)$, which is just the minimum cost of walking to it from the front or to the back. It's clear that after the initial teleporter, we will choose the teleporters based from lowest cost to highest cost.
 
 The problem now is how to determine the first teleporter we want to use? We can iterate using each teleporter as the first one, and using binary search + prefix sum to determine how many teleporters we can use after the first one. The problem that encounters with this is when you binary search, you might include the one where you already used as the initial teleporter, so you would need to keep track and deduct the value when your binary search includes that teleporter.
 
@@ -493,7 +494,7 @@ void solve() {
 
 Time complexity: $O(nlogn)$
 
-## [CF 1929D. Sasha and a Walk in the City (1900)](https://codeforces.com/contest/1929/problem/D) 
+## [CF 1929D. Sasha and a Walk in the City (1900)](https://codeforces.com/contest/1929/problem/D)
 
 A really tricky dp problem that stomped me for a good while, but the solution is one of the shortest in this list.
 
@@ -517,42 +518,40 @@ vi graph[MAXN];
 vi dp(MAXN, 0);
 const int MOD = 998244353;
 void dfs(int cur, int prev) {
-	for(auto v : graph[cur]) {
-		if(v == prev) continue;
-		dfs(v, cur);
-		dp[cur] *= (dp[v] + 1);
-		dp[cur] %= MOD;
-	}
+    for(auto v : graph[cur]) {
+        if(v == prev) continue;
+        dfs(v, cur);
+        dp[cur] *= (dp[v] + 1);
+        dp[cur] %= MOD;
+    }
 }
 void solve() {
-	int n;
-	cin >> n;
-	for(int i = 1; i <= n; i++) {
-		graph[i].clear();
-		dp[i] = 1;
-	}
-	for(int i = 0; i < n - 1; i++) {
-		int u, v;
-		cin >> u >> v;
-		graph[u].pb(v);
-		graph[v].pb(u);
-	}
-	dfs(1, -1);
-	int ans = 1;
-	for(int i = 1; i <= n; i++){
-		ans += dp[i];
-		ans %= MOD;
-	}
-	cout << ans << endl;
-	return;
+    int n;
+    cin >> n;
+    for(int i = 1; i <= n; i++) {
+        graph[i].clear();
+        dp[i] = 1;
+    }
+    for(int i = 0; i < n - 1; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].pb(v);
+        graph[v].pb(u);
+    }
+    dfs(1, -1);
+    int ans = 1;
+    for(int i = 1; i <= n; i++){
+        ans += dp[i];
+        ans %= MOD;
+    }
+    cout << ans << endl;
+    return;
 }
 ```
 
 Time complexity: $O(n)$
 
-
-
-## [CF 1856E1. PermuTree (easy version) (1800)](https://codeforces.com/contest/1856/problem/E1) 
+## [CF 1856E1. PermuTree (easy version) (1800)](https://codeforces.com/contest/1856/problem/E1)
 
 I genuinely do not understand how this problem is 1800...maybe im just really bad at dp.
 
@@ -620,13 +619,13 @@ void solve() {
 
 Time complexity: $O(n^2)$
 
-## [CF 1856E2. PermuTree (hard version) (2700)](https://codeforces.com/contest/1856/problem/E2) 
+## [CF 1856E2. PermuTree (hard version) (2700)](https://codeforces.com/contest/1856/problem/E2)
 
 Note: I was not able to solve this problem even following the editorial, the time limit is very strict but I feel like still including this problem and mentioning the techniques use for this problem.
 
 The are two main optimizations for this problem: $O(n\sqrt{n})$ subset sum trick and using bitsets to optimize the dp by $\frac{1}{64}$. Very tricky stuff :)
 
-## [CF 1914G1. Light Bulbs (Easy Version) (2100)](https://codeforces.com/contest/1914/problem/G1)     
+## [CF 1914G1. Light Bulbs (Easy Version) (2100)](https://codeforces.com/contest/1914/problem/G1)
 
 The editorial uses XOR hashing, but I feel like my alternative solution using graph theory is way more intuitive.
 
@@ -658,107 +657,106 @@ int sccCnt = 0;
 vector<int> indeg(MAXN, 0);
 vector<int> s;
 void init() {
-	for(int i = 1; i <= n; i++) {
-		g[i].clear();
-		g2[i].clear();
-		scc[i] = 0;
-		used[i] = 0;
-		visited[i] = false;
-		indeg[i] = 0;
-		sccsz[i] = 0;
-	}
-	sccCnt = 0;
-	s.clear();
-	v.clear();
+    for(int i = 1; i <= n; i++) {
+        g[i].clear();
+        g2[i].clear();
+        scc[i] = 0;
+        used[i] = 0;
+        visited[i] = false;
+        indeg[i] = 0;
+        sccsz[i] = 0;
+    }
+    sccCnt = 0;
+    s.clear();
+    v.clear();
 }
 void dfs1(int u) {
-	visited[u] = true;
-	for (int v : g[u])
-		if (!visited[v]) dfs1(v);
-  	s.push_back(u);
+    visited[u] = true;
+    for (int v : g[u])
+        if (!visited[v]) dfs1(v);
+      s.push_back(u);
 }
 void dfs2(int u) {
-  	scc[u] = sccCnt;
-  	for (int v : g2[u]) {
-		if (!scc[v]) dfs2(v);
-  	}
+      scc[u] = sccCnt;
+      for (int v : g2[u]) {
+        if (!scc[v]) dfs2(v);
+      }
 }
 void solve() {
-	cin >> n;
-	init();
-	for(int i = 0; i < 2 * n; i++) {
-		int num;
-		cin >> num;
-		v.pb(num);
-	}
-	// build graph
-	for(int i = 0; i < 2 * n; i++) {
-		if(used[v[i]]) continue;
-		used[v[i]] = true;
-		for(int j = i + 1; j < 2 * n && v[j] != v[i]; j++) {
-			g[v[i]].push_back(v[j]);
-			g2[v[j]].push_back(v[i]);
-		}
-	}
-	// do SCC
-	for(int i = 1; i <= n; i++) {
-		if(!visited[i]) dfs1(i);
-	}
-	for(int i = n - 1; i >= 0; i--) {
-		if(scc[s[i]] == 0) {
-			sccCnt += 1;
-			dfs2(s[i]);
-		}
-	}
-	// count indeg
-	for(int i = 1; i <= n; i++) {
-		for(auto j : g[i]) {
-			if(scc[i] != scc[j]) indeg[scc[j]] += 1;
-		}
-	}
-	int ans1 = 0, ans2 = 1;
-	for(int i = 1; i <= n; i++) {
-		sccsz[scc[i]] += 1;
-	}
-	for(int i = 1; i <= sccCnt; i++) {
-		if(indeg[i] == 0) {
-			ans1 += 1;
-			ans2 *= (sccsz[i] * 2);
-			ans2 %= 998244353;
-		}
-	}
-	cout << ans1 << " " << ans2 << endl;
-	return;
+    cin >> n;
+    init();
+    for(int i = 0; i < 2 * n; i++) {
+        int num;
+        cin >> num;
+        v.pb(num);
+    }
+    // build graph
+    for(int i = 0; i < 2 * n; i++) {
+        if(used[v[i]]) continue;
+        used[v[i]] = true;
+        for(int j = i + 1; j < 2 * n && v[j] != v[i]; j++) {
+            g[v[i]].push_back(v[j]);
+            g2[v[j]].push_back(v[i]);
+        }
+    }
+    // do SCC
+    for(int i = 1; i <= n; i++) {
+        if(!visited[i]) dfs1(i);
+    }
+    for(int i = n - 1; i >= 0; i--) {
+        if(scc[s[i]] == 0) {
+            sccCnt += 1;
+            dfs2(s[i]);
+        }
+    }
+    // count indeg
+    for(int i = 1; i <= n; i++) {
+        for(auto j : g[i]) {
+            if(scc[i] != scc[j]) indeg[scc[j]] += 1;
+        }
+    }
+    int ans1 = 0, ans2 = 1;
+    for(int i = 1; i <= n; i++) {
+        sccsz[scc[i]] += 1;
+    }
+    for(int i = 1; i <= sccCnt; i++) {
+        if(indeg[i] == 0) {
+            ans1 += 1;
+            ans2 *= (sccsz[i] * 2);
+            ans2 %= 998244353;
+        }
+    }
+    cout << ans1 << " " << ans2 << endl;
+    return;
 }
 ```
 
 Time complexity: $O(n^2)$
 
-## [CF 1914G2. Light Bulbs (Hard Version) (2300)](https://codeforces.com/contest/1914/problem/G2) 
+## [CF 1914G2. Light Bulbs (Hard Version) (2300)](https://codeforces.com/contest/1914/problem/G2)
 
 Our solution for easy version was bounded by the graph building process which was $O(n^2)$, but there is actually a way to optimize the graph to only $2n$ edges!
 
 I did not really understand how this optimization works, but I'll still include it here and maybe try understanding it some day.
 
 ```cpp
-	// build graph
-	deque<int> dq;
-	for(int i = 0; i < 2 * n; i++) {
-		if(dq.size()) {
-			g[dq.back()].push_back(v[i]);
-			g2[v[i]].push_back(dq.back());			
-		}
-		if(used[v[i]] == 0) {
-			used[v[i]] += 1;
-			dq.push_back(v[i]);
-		} else {
-			used[v[i]] += 1;
-			while(dq.size() && used[dq.back()] == 2) dq.pop_back();
-		}
-	}
+    // build graph
+    deque<int> dq;
+    for(int i = 0; i < 2 * n; i++) {
+        if(dq.size()) {
+            g[dq.back()].push_back(v[i]);
+            g2[v[i]].push_back(dq.back());
+        }
+        if(used[v[i]] == 0) {
+            used[v[i]] += 1;
+            dq.push_back(v[i]);
+        } else {
+            used[v[i]] += 1;
+            while(dq.size() && used[dq.back()] == 2) dq.pop_back();
+        }
+    }
 ```
 
 Time complexity: $O(n)$
-
 
 Afterwards: Chicago really has some good food! Although serious note, I really need to get myself back on the track after this spring break, I know I can do it, fighting! And in terms of CF, I think I'll start doing more 2000~2200 problems, and after that I'll start doing contests again.
