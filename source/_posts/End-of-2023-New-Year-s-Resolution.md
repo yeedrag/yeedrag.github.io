@@ -39,5 +39,3 @@ I hope 2024 will be a great year, and that I can have an epic comeback and becom
 ![comeback](comeback.png)
 
 Happy new year :D
-
-

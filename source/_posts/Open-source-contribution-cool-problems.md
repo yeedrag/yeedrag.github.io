@@ -40,7 +40,7 @@ It turns out the solution was really straightforward:
 There is actually a bound when the remainder for $\displaystyle \frac{f^2 + f}{2} \space \text{mod} \space n$ starts looping!
 The bound is actually $2n$, where I will give a proof quickly here (Alhtough should be moderately obvious):
 
-$\displaystyle \frac{(2n+k)^2 + (2n+k)}{2} \space \text{mod} \space n = \frac{4n^2+4nk+2n+k^2+k}{2} \space \text{mod} \space n = (n^2+2nk+2n) + \frac{k^2+k}{2} \space \text{mod} \space n$
+$\displaystyle \frac{(2n+k)^2 + (2n+k)}{2} \space \text{mod} \space n = \frac{4n^2+4nk+2n+k^2+k}{2} \space \text{mod} \space n = (2n^2+2nk+2n) + \frac{k^2+k}{2} \space \text{mod} \space n$
 $\displaystyle = \frac{k^2+k}{2} \space \text{mod} \space n$, so $(2n+k) = k$ in this function when $\text{mod} \space n$.
 
 So the solution is to try the first $min(2n, p)$ numbers... how disappointing :/
