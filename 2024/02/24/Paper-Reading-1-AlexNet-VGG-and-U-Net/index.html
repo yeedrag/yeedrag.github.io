@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Paper Reading 1: AlexNet, VGG and U-Net | Yeedrag's website :D</title><meta name="author" content="Yeedrag"><meta name="copyright" content="Yeedrag"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="For the first week of my goal of reading AI paper, I chose three very classic CV papers to read from. Lets see what we can learn from reading these very old yet groundbreaking papers! I’ll roughly tal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper Reading 1: AlexNet, VGG and U-Net">
+<meta property="og:url" content="http://example.com/2024/02/24/Paper-Reading-1-AlexNet-VGG-and-U-Net/index.html">
+<meta property="og:site_name" content="Yeedrag&#39;s website :D">
+<meta property="og:description" content="For the first week of my goal of reading AI paper, I chose three very classic CV papers to read from. Lets see what we can learn from reading these very old yet groundbreaking papers! I’ll roughly tal">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pbs.twimg.com/profile_images/1610231810201636870/Nj3OUXrQ_400x400.jpg">
+<meta property="article:published_time" content="2024-02-24T22:28:26.000Z">
+<meta property="article:modified_time" content="2024-04-01T18:46:36.799Z">
+<meta property="article:author" content="Yeedrag">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pbs.twimg.com/profile_images/1610231810201636870/Nj3OUXrQ_400x400.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/02/24/Paper-Reading-1-AlexNet-VGG-and-U-Net/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><meta/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Paper Reading 1: AlexNet, VGG and U-Net',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-01 13:46:36'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/modify.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pbs.twimg.com/profile_images/1610231810201636870/Nj3OUXrQ_400x400.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="Yeedrag's website :D"><span class="site-name">Yeedrag's website :D</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Paper Reading 1: AlexNet, VGG and U-Net</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-02-24T22:28:26.000Z" title="Created 2024-02-24 16:28:26">2024-02-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-04-01T18:46:36.799Z" title="Updated 2024-04-01 13:46:36">2024-04-01</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>10mins</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>For the first week of my goal of reading AI paper, I chose three very classic CV papers to read from. Lets see what we can learn from reading these very old yet groundbreaking papers!</p>
+<p>I’ll roughly talk about the main important parts of the papers and add my own thoughts and opinions. Details can be found in the original paper that I’ve linked in the title.</p>
+<h2 id="imagenet-classification-with-deep-convolutional-neural-networks-2012"><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">ImageNet Classification with Deep Convolutional Neural Networks (2012)</a></h2>
+<p>This is the paper about the well-known model “AlexNet”. I would say this is one of the most influential CV papers of all time. This is the first paper that really showed the world what large scale Convolution Neural Networks can do, and also mentioned several techniques that are used even today.</p>
+<h3 id="dataset-for-alexnet">Dataset for AlexNet</h3>
+<p>An important background to note about this paper is the existence of ImageNet, a large scale image database with over 15 milion labeled high-res images in over 22000 categories.</p>
+<p>Prior to these big datasets, there were only small dataset that were not enough data to train a “large” CNN model like AlexNet.</p>
+<h3 id="relu-nonlinearity">ReLU Nonlinearity</h3>
+<p>One big contribution about AlexNet is choosing ReLU instead of the more common non-linear functions like tanh or sigmoid as its output function (which we like to call activation functions today). According to the paper, this change enabled around 25% faster convergence speed compared to tanh.</p>
+<h3 id="multi-gpu-training">Multi GPU Training</h3>
+<p>Since AlexNet was so big, they used multiple GPUs to train their models, which is also something common with todays huge models.</p>
+<h3 id="local-responce-normalization-lrn">Local Responce Normalization (LRN)</h3>
+<p>This was a normalization technique introduced in this paper. The idea is similar to lateral inhibition in biological systems, where it amplifies the strong responces by damping the neighbors.</p>
+<p>Do note that this method of normalization isn’t being used alot in recent years, with it being overshadowed by more popular techniques like Batch Normalization, but its still an interesting idea to learn from.</p>
+<h3 id="overlapping-pooling">Overlapping Pooling</h3>
+<p>In this paper they used max pooling in certain layers. Pooling before this paper usually used non-overlapping pooling, but according to this paper, making the pooling overlap can reduce the error rates and that they observed the model is harder to overfit with overlapping pooling.</p>
+<p>Overlapping pooling is also quite the norm in recent years, at least I was really suprised to know that they didn’t do overlapping pooling before.</p>
+<h3 id="reducing-overfitting">Reducing Overfitting</h3>
+<p>In the paper, they mentioned two tricks they employed that reduced overfitting. These two methods are also used alot even today.</p>
+<h4 id="data-augmentation">Data Augmentation</h4>
+<p>The main augmentation used is image translation and horizontal reflection. They extracted random patches from the images and also flipped them, which in total increases the size of the dataset by 2048. During testing, they do the same thing to the testing image, and average the predictions made on each patches, which is something I don’t think we do now.</p>
+<p>Secondly, they also alter the intensities of the RGB channels in the images, which is also quite common now.</p>
+<h4 id="drop-out">Drop Out</h4>
+<p>They also employed a famous technique called drop out, which randomly drops out neurons during training, and this forces the model to be more robust and not rely on certain neurons.</p>
+<p>Something interesting is that they chose a 50% chance to drop out a neuron. During testing, they would multiply the output with 0.5 to make an approximation of the loss from the drop out. I think what we usually do now is scale the remaining neurons up to make the expectaion the same as before.</p>
+<h3 id="other-details-and-discussion">Other Details and Discussion</h3>
+<p>In the paper, they concluded the depth of the model is extremely important, and even just removing one layer made the performance drop drastically.</p>
+<p>They chose to use stochastic gradient descent with batch size 128, momentum 0.9, weight decay of 0.0005. They concluded that the weight decay was important for the model to learn. (Note: Adam was published at 2014)<br>
+They also used a fixed learning rate, only scaling it by 1/10 when the validation learning rate stopped improving. The whole model took 6 days on a GTX 580 3GB.</p>
+<h2 id="very-deep-convolutional-networks-for-large-scale-image-recognition-2014"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1409.1556.pdf">Very Deep Convolutional Networks for Large-Scale Image Recognition (2014)</a></h2>
+<p>This paper is the paper for famous VGG model, where it kinda developed a systematic way to build CNNs, and shown the world how important depth is for a model.</p>
+<h3 id="3-x-3-convolutions">3 x 3 Convolutions</h3>
+<p>According to the paper, a 3x3 convolution is the smallest size to cature the notion of left/right, up/down and center. They discovered that not only you can stack 3x3 convolutions to have the same effective receptive field as larger convolutions (two 3x3 is the same as a 5x5), you can even achieve a higher accuracy due to incoporating more non-linearity in between the convolutions (deep with small filters &gt; shallow but large fillers). Futhermore, stacking small filters decreases the model’s parameters (three 3x3 with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span> channels has <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>⋅</mo><mo stretchy="false">(</mo><msup><mn>3</mn><mn>2</mn></msup><msup><mi>c</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mo>=</mo><mn>27</mn><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">3 \cdot (3^2c^2) = 27c^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">7</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> params, while one 7x7 with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span> channels has <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>7</mn><mn>2</mn></msup><mi>c</mi><mo>=</mo><mn>49</mn><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">7^2c = 49c^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">7</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">4</span><span class="mord">9</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> params), which makes training cheaper.</p>
+<p>However, they also tested models that incorporated 1x1 convolutions (Used in Network in Network (NiN)), but performs worse than the 3x3 counterpart, which suggests that non-linearity is important, but so is capturing spatial context.</p>
+<h3 id="scale-jittering">Scale Jittering</h3>
+<p>They also mentioned an interesting augmentation idea, which is randomly scaling the images and cropping them.They did two tests, one is scaling the images to a fixed size, the second one is scaling the images to [256, 512], and then cropping the image. They found out that doing scale jittering at training time did lead to significantly better results than fixing the size, even when the fixed scale is used in test time.</p>
+<p>They also tested scale jittering during test time, and while it was better than fixed, they suspected was due to a different treatment of boundary conditions, and their combination outperforms both of them.</p>
+<h3 id="other-details-and-discussion">Other Details and Discussion</h3>
+<p>They also tested AlexNet’s LRN, but found that it didn’t have much improvement compared to the models that didn’t employ this technique.</p>
+<p>They also didn’t sample multiple crops at the same time like AlexNet did, but I didn’t really understand why they said they didn’t while I felt like they did :/.</p>
+<p>The rest of the tricks, the batch size, the learning rate and details are all the same as AlexNet, so I won’t go over them again.</p>
+<p>The training was done on 4 Titan Black GPUs, and each net took around 2~3 weeks.</p>
+<h2 id="u-net-convolutional-networks-for-biomedical-image-segmentation-2015"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1505.04597.pdf">U-Net: Convolutional Networks for Biomedical Image Segmentation (2015)</a></h2>
+<p>This is the paper for the famous semantic segmentation model U-Net, which has precise localization, and is even used in my research for historical map segmentation.</p>
+<h3 id="challenges">Challenges</h3>
+<p>It’s important to note the challenges behind biomedical image segmentation, and the problems with previous works.</p>
+<p>One of the most difficult problem is the precision required in biomedical images, having precise localization is a must when dealing with medical images that might become a life or death situation. There has been previous attempts to localize and assign each pixel to a class by using a small sliding window and predicting each patch. This method however is too computational heavy, and also loses the whole context of the picture since you are only using a small part of the image.</p>
+<p>Secondly, the separation of touching objects of the same classes is also a tricky situation to handle, and their boundaries are really similar and its easy for the model to think that they all belong to one object.</p>
+<h3 id="architecture">Architecture</h3>
+<p>Since the most important part of U-Net is the architecture, I will give a brief explaination of how it works.</p>
+<p><img src="unet.png" alt="unet"></p>
+<p>As you can see in the picture, there are two main paths: The left part is the contraction path (Or encoder in recent terms), where it downsamples the original images, capturing the pictures high-level features.</p>
+<p>The right part is the Expansion path (decoder), where is starts to upsample the feature maps, and also connecting with previous maps from the contraction path (This is actually really similar to skip-connection in ResNet, which I will cover in later readings). This way, the model can localize better while retaining the information of high-level features.</p>
+<p>Also notice that the model did not utilize any fully connected layers (or dense layers), which makes this model a fully convolutional network, that is said to be able to enable seemless segmentation of arbitrarily large images.</p>
+<h3 id="loss">Loss</h3>
+<p>In order to combat the boundary problem, they used a weighted soft-max + cross entropy loss to penalize wrong border assigning.</p>
+<p>Recent days we will tend to use Dice Loss or focal loss, which usually has better effects accoring to my own experience.</p>
+<h3 id="data-augmentation">Data Augmentation</h3>
+<p>Data augmentation was also an important part of medical image segmentation, as often only few training images are availiable. The augmentation they chose is shift and rotation, as well as elastic deformation and gray scale variations. According to the paper, these augmentations contributed massively to their success.</p>
+<h2 id="final-words">Final Words</h2>
+<p>This week I read the three aforementioned papers, and its honestly really fascinating to see some of the techniques that we are still using to this day, while some ideas and questions have better solutions now. Also, reading papers isn’t as difficult as I thought, although I think maybe this is because im quite familiar with these models and methods. All in all, I really enjoyed reading these papers, and we’ll see whats coming up next!</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pbs.twimg.com/profile_images/1610231810201636870/Nj3OUXrQ_400x400.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yeedrag</div><div class="author-info__description">A nobody trying to become somebody</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yeedrag"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yeedrag" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:yeedrag0722@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Thanks for passing by!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#imagenet-classification-with-deep-convolutional-neural-networks-2012"><span class="toc-number">1.</span> <span class="toc-text">ImageNet Classification with Deep Convolutional Neural Networks (2012)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dataset-for-alexnet"><span class="toc-number">1.1.</span> <span class="toc-text">Dataset for AlexNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#relu-nonlinearity"><span class="toc-number">1.2.</span> <span class="toc-text">ReLU Nonlinearity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#multi-gpu-training"><span class="toc-number">1.3.</span> <span class="toc-text">Multi GPU Training</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#local-responce-normalization-lrn"><span class="toc-number">1.4.</span> <span class="toc-text">Local Responce Normalization (LRN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#overlapping-pooling"><span class="toc-number">1.5.</span> <span class="toc-text">Overlapping Pooling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reducing-overfitting"><span class="toc-number">1.6.</span> <span class="toc-text">Reducing Overfitting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#data-augmentation"><span class="toc-number">1.6.1.</span> <span class="toc-text">Data Augmentation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drop-out"><span class="toc-number">1.6.2.</span> <span class="toc-text">Drop Out</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#other-details-and-discussion"><span class="toc-number">1.7.</span> <span class="toc-text">Other Details and Discussion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#very-deep-convolutional-networks-for-large-scale-image-recognition-2014"><span class="toc-number">2.</span> <span class="toc-text">Very Deep Convolutional Networks for Large-Scale Image Recognition (2014)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-x-3-convolutions"><span class="toc-number">2.1.</span> <span class="toc-text">3 x 3 Convolutions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scale-jittering"><span class="toc-number">2.2.</span> <span class="toc-text">Scale Jittering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#other-details-and-discussion"><span class="toc-number">2.3.</span> <span class="toc-text">Other Details and Discussion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u-net-convolutional-networks-for-biomedical-image-segmentation-2015"><span class="toc-number">3.</span> <span class="toc-text">U-Net: Convolutional Networks for Biomedical Image Segmentation (2015)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#challenges"><span class="toc-number">3.1.</span> <span class="toc-text">Challenges</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#architecture"><span class="toc-number">3.2.</span> <span class="toc-text">Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loss"><span class="toc-number">3.3.</span> <span class="toc-text">Loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-augmentation"><span class="toc-number">3.4.</span> <span class="toc-text">Data Augmentation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#final-words"><span class="toc-number">4.</span> <span class="toc-text">Final Words</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/11/Linear-Algebra-in-ML-1-PCA/" title="Linear Algebra in ML: PCA">Linear Algebra in ML: PCA</a><time datetime="2024-05-11T06:29:00.000Z" title="Created 2024-05-11 01:29:00">2024-05-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/CM-CF-Practice/" title="CM+ CF Practice">CM+ CF Practice</a><time datetime="2024-03-23T22:11:21.000Z" title="Created 2024-03-23 17:11:21">2024-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/02/Paper-Reading-2-R-CNN-Fast-R-CNN-Faster-R-CNN/" title="Paper Reading 2: R-CNN, Fast R-CNN, Faster R-CNN">Paper Reading 2: R-CNN, Fast R-CNN, Faster R-CNN</a><time datetime="2024-03-03T05:54:46.000Z" title="Created 2024-03-02 23:54:46">2024-03-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/24/Paper-Reading-1-AlexNet-VGG-and-U-Net/" title="Paper Reading 1: AlexNet, VGG and U-Net">Paper Reading 1: AlexNet, VGG and U-Net</a><time datetime="2024-02-24T22:28:26.000Z" title="Created 2024-02-24 16:28:26">2024-02-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/21/New-Goal-Read-Papers/" title="New Goal: Read Papers">New Goal: Read Papers</a><time datetime="2024-02-21T06:02:37.000Z" title="Created 2024-02-21 00:02:37">2024-02-21</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Yeedrag</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script></div></body></html>
