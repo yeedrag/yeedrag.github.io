@@ -115,6 +115,10 @@ markdown:
     linkify: true
     typographer: true
   plugins:
+   - plugin:
+     name: '@neilsustc/markdown-it-katex'
+     options:
+       strict: false
   anchors:
     level: 1
     collisionSuffix: ''
