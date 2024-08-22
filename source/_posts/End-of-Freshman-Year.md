@@ -51,6 +51,6 @@ I do have quite some wishes and goals for my second year in university. Some are
 
 6. Workout: Well, I'm not saying to become a powerlifter or something like that, but I hope I can at least workout regularly to be healthy.
 
-7. Publish 5 papers: This sounds a bit crazy (I don't even have my first one yet lol), but I think it is doable, since I will do an REU in summer, and after finishing my work in Academia Sinica I could ask for a new research, plus I will work with a professor next semester. The point is, I hope the research I will do is more of a fundamental type research, and not just implementin a method on a subject type research.
+7. Publish 5 papers: This sounds a bit crazy (I don't even have my first one yet lol), but I think it is doable, since I will do an REU in summer, and after finishing my work in Academia Sinica I could ask for a new research, plus I will work with a professor next semester. The point is, I hope the research I will do is more of a fundamental type research, and not just implementing a method on a subject type research.
 
 8. Be confident and love yourself: You can do it! :D
