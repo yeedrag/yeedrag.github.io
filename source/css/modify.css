@@ -56,16 +56,16 @@ rgba(35,37,58,.9),
 rgba(24,40,72,.2));
 }
 /*主页文章预览页面*/
-#recent-posts>.recent-post-item{
-  background: linear-gradient(-45deg, rgba(225,235,255,.8), 
-rgba(225,235,255,.9), 
-rgba(225,235,255,.9), 
+#recent-posts .recent-post-item{
+  background: linear-gradient(-45deg, rgba(225,235,255,.8),
+rgba(225,235,255,.9),
+rgba(225,235,255,.9),
 rgba(225,235,255,.8));
 }
-[data-theme=dark] #recent-posts>.recent-post-item{
-  background: linear-gradient(-45deg, rgba(24,40,72,.2), 
-rgba(35,37,58,.9), 
-rgba(35,37,58,.9), 
+[data-theme=dark] #recent-posts .recent-post-item{
+  background: linear-gradient(-45deg, rgba(24,40,72,.2),
+rgba(35,37,58,.9),
+rgba(35,37,58,.9),
 rgba(24,40,72,.2));
 }
 
