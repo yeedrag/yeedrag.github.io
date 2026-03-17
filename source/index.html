@@ -21,34 +21,29 @@
             </nav>
         </header>
 
-        <main class="fade-in">
-            <!-- Intro / Hero -->
-            <div class="glass-card">
-                <section class="hero">
-                    <h1>Hey! I'm Andy Wang.</h1>
-                    <p class="subtitle">AI Safety Researcher | UW Madison CS & Math</p>
+        <main>
+            <section>
+                <h1>Andy Wang</h1>
+                <p class="subtitle">AI Safety Researcher | UW Madison CS & Math</p>
 
-                    <div class="bio-text">
-                        <p>I am a student at the University of Wisconsin Madison studying Math and Computer Sciences.
-                            You might know me by my online alias <strong>yeedrag</strong>.</p>
-                        <p>I believe that ensuring AI is safe and aligned might be the most important problem we have
-                            now, and we might not have a lot of time to do so. I want to help humanity solve this
-                            problem by doing technical AI safety research, and understand how we can control AI models
-                            to prevent malicious behavior.</p>
-                    </div>
+                <div class="bio-text">
+                    <p>Astra Research Fellow working on CoT monitorability with Scott Emmons (Anthropic, prev. Google DeepMind). Previously Research Fellow at SPAR and Research Intern at American Family Insurance.
+                        Also known as <strong>yeedrag</strong> online.</p>
+                    <p>I think making sure AI goes well is probably the most important problem right now,
+                        and I'd like to spend my career helping with that.</p>
+                </div>
 
-                    <div class="cta-group">
-                        <a href="mailto:yeedrag0722@gmail.com" class="btn btn-secondary">Contact Me</a>
-                        <a href="https://www.linkedin.com/in/andywang2005/" target="_blank"
-                            class="btn btn-secondary">LinkedIn</a>
-                        <a href="https://github.com/yeedrag" target="_blank" class="btn btn-secondary">GitHub</a>
-                        <span class="btn btn-secondary" style="cursor: default; opacity: 0.9;">Discord: yeedrag</span>
-                    </div>
-                </section>
-            </div>
+                <p class="links">
+                    <a href="mailto:yeedrag0722@gmail.com">Email</a> &middot;
+                    <a href="https://www.linkedin.com/in/andywang2005/" target="_blank">LinkedIn</a> &middot;
+                    <a href="https://github.com/yeedrag" target="_blank">GitHub</a> &middot;
+                    Discord: yeedrag
+                </p>
+            </section>
 
-            <!-- Experience Section -->
-            <div class="glass-card">
+            <hr class="section-divider">
+
+            <section>
                 <h2 class="section-title">Experience</h2>
 
                 <div class="experience-item">
@@ -56,9 +51,9 @@
                         <h3>Astra Research Fellow</h3>
                         <span class="exp-date">Jan 2026 – Present</span>
                     </div>
-                    <p class="exp-org">Constellation Research Center (Full-time)</p>
+                    <p class="exp-org">Constellation (Berkeley, CA)</p>
                     <ul class="exp-details">
-                        <li>Incoming safety research fellow working with Scott Emmons (prev. Google DeepMind) on CoT
+                        <li>Working with Scott Emmons (Anthropic, prev. Google DeepMind) on CoT
                             monitorability.</li>
                     </ul>
                 </div>
@@ -97,18 +92,17 @@
                         <li>Connecting with researchers to refine strategies for safety-focused groups.</li>
                     </ul>
                 </div>
-            </div>
+            </section>
 
-            <!-- Interests Section -->
-            <div class="glass-card">
+            <hr class="section-divider">
+
+            <section>
                 <h2 class="section-title">Interests</h2>
 
                 <div class="interests-grid">
-                    <div class="experience-item" style="margin-bottom: 0;">
-                        <div class="exp-header">
-                            <h3>Research Areas</h3>
-                        </div>
-                        <ul class="exp-details">
+                    <div class="interest-group">
+                        <h3>Research Areas</h3>
+                        <ul>
                             <li>CoT Monitorability</li>
                             <li>AI Control</li>
                             <li>Eval Awareness</li>
@@ -116,11 +110,9 @@
                         </ul>
                     </div>
 
-                    <div class="experience-item" style="margin-bottom: 0; border: none;">
-                        <div class="exp-header">
-                            <h3>Personal</h3>
-                        </div>
-                        <ul class="exp-details">
+                    <div class="interest-group">
+                        <h3>Personal</h3>
+                        <ul>
                             <li>Combinatorics</li>
                             <li>Number Theory</li>
                             <li>Video Games</li>
@@ -128,14 +120,27 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-
+            </section>
         </main>
 
         <footer>
-            <p>&copy; 2025 Andy Wang.</p>
+            <p>&copy; 2025 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
         </footer>
     </div>
+    <label class="toggle" aria-label="Toggle dark mode">
+        <input type="checkbox" onchange="toggleTheme()">
+        <span class="slider"></span>
+    </label>
+    <script>
+        function toggleTheme() {
+            const dark = document.body.classList.toggle('dark');
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            document.querySelector('.toggle input').checked = true;
+        }
+    </script>
 </body>
 
 </html>
