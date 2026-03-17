@@ -21,55 +21,52 @@
             </nav>
         </header>
 
-        <main class="fade-in">
-            <div class="glass-card">
-                <div
-                    style="margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                    <h1 style="font-size: 1.75rem; color: #fff; margin-bottom: 0.5rem;">What I'm doing now</h1>
-                    <p class="subtitle" style="margin-bottom: 0; color: #cbd5e1;">This is a <a
-                            href="https://nownownow.com/about" target="_blank"
-                            style="color: var(--accent-color); text-decoration: none;">"now page"</a>. You should make
-                        one too!</p>
-                </div>
+        <main>
+            <div class="now-header">
+                <h1>What I'm doing now</h1>
+                <p>This is a <a href="https://nownownow.com/about" target="_blank">"now page"</a>. You should make
+                    one too!</p>
+            </div>
 
-                <div class="content-block">
-                    <p><strong>Last Updated:</strong> January 19, 2026. Talking to my friends in Constellation meeting room.</p>
+            <p class="now-meta"><strong>Last Updated:</strong> March 16, 2026. At home waiting for Claude Code to do research.</p>
 
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #fff;">Recent updates</h3>
-                    <ul style="padding-left: 1.5rem; color: #cbd5e1; list-style-type: disc; margin-bottom: 2rem;">
-                        <li style="margin-bottom: 0.75rem;">I have now participated in Astra fellowship for 2 weeks. I'm loving it so much! I've been doing so much research and have done activities that I've never would've thought of (Finished a difficult hike, went to the symphony, went axe throwing...etc). Will do a blog later about this!</li>
-                        <li style="margin-bottom: 0.75rem;">I (semi) graduated university! Technically I have 17 credits
-                            left, but I'm planning to finish them through transferring credits and doing online classes,
-                            so I likely won't be going back to Madison after my fellowship.</li>
-                        <li style="margin-bottom: 0.75rem;">I wrapped up my internship at American Family Insurance a
-                            while ago. It was an amazing experience and I will certainly miss my team.</li>
-                    </ul>
+            <div class="now-section">
+                <h3>Recent updates</h3>
+                <ul>
+                    <li>We are almost halfway through Astra! I knew that this would be life changing, but I didn't know it would change me so much. Being here really makes you understand how far "you can just do things" can take you!</li>
+                    <li>Co-wrote a <a href="https://www.lesswrong.com/posts/9woCWqiDbSFPXpxvn/the-current-sota-model-was-released-without-safety-evals" target="_blank">LessWrong post</a> on how GPT 5.4 Pro is SOTA but has no public safety data!</li>
+                    <li>Worked on a major report on safety testing Kimi K2.5, and planning to turn this into an org!</li>
+                    <li>Bouldering is so fun! I started at the end of January and I just climbed a V3 two weeks ago! It has become one of my main ways to relieve stress and have fun.</li>
+                </ul>
 
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #fff;">What's on my mind right now?</h3>
-                    <ul style="padding-left: 1.5rem; color: #cbd5e1; list-style-type: disc; margin-bottom: 2rem;">
-                        <li style="margin-bottom: 0.75rem;">Very anxious about uncertainties — trying to figure out how
-                            to sublease my place, how to graduate with online classes, etc.</li>
-                        <li style="margin-bottom: 0.75rem;">Feeling a sense of insecurity and imposter syndrome. Am I
-                            really good enough for the roles im in now? I wonder when I can genuinely embrace and be
-                            proud of myself and my accomplishments.</li>
-                        <li style="margin-bottom: 0.75rem;">I want to learn more about AI politics, finances, and
-                            writing! I am worrying lacking on these domains as a AI safety researcher.</li>
-                    </ul>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #fff;">Other stuff</h3>
-                    <ul style="padding-left: 1.5rem; color: #cbd5e1; list-style-type: disc;">
-                        <li style="margin-bottom: 0.75rem;">I finally updated my website to have a (somewhat) formal
-                            landing page! This is why you are seeing this Now page. Thanks for pushing me to make these
-                            changes WAISI folks!</li>
-                    </ul>
-                </div>
+                <h3>What's on my mind right now?</h3>
+                <ul>
+                    <li>Stress, stress, stress! Working from 8 to 11 seven days a week is really taking a toll on my mental health...</li>
+                    <li>Very high sense of imposter syndrome due to all the opportunities I've been given and things that I am doing. Going for routine walks is really helpful!</li>
+                    <li>I'm really grateful to have such a great group of friends that support me and encourage me to grow. Love yall :D</li>
+                    <li>There are so many low hanging fruits in AI safety, we really need to lock in if we want to not die...</li>
+                </ul>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 Yeedrag. Built with Hexo.</p>
+            <p>&copy; 2025 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
         </footer>
     </div>
+    <label class="toggle" aria-label="Toggle dark mode">
+        <input type="checkbox" onchange="toggleTheme()">
+        <span class="slider"></span>
+    </label>
+    <script>
+        function toggleTheme() {
+            const dark = document.body.classList.toggle('dark');
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            document.querySelector('.toggle input').checked = true;
+        }
+    </script>
 </body>
 
 </html>
