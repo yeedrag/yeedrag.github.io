@@ -32,9 +32,10 @@
 
                 <div class="bio-text">
                     <p>AI Safety Researcher thinking about US-China Coordination, Behavioral Evaluations, Situational
-                        Awareness and Investigating Misalignment Incidents. Previously METR, Astra Research Fellow, SPAR
-                        Research Fellow and Red team intern at American Family Insurance. Also known as
-                        <em>yeedrag</em> online.</p>
+                        Awareness and Investigating Misalignment Incidents. Currently, I am a technical governance
+                        researcher at Safe AI Forum. Previously I was at Redwood Research and METR, and also was a
+                        Constellation Astra Research Fellow, SPAR Research Fellow and Red team intern at American
+                        Family Insurance. Also known as <em>yeedrag</em> online.</p>
                     <p>I think making sure AI goes well is probably the most important problem right now,
                         and I'd like to spend my career helping with that.</p>
                     <p>I also signed <a href="https://www.givingwhatwecan.org/pledge" target="_blank">The 🔸10%
@@ -52,7 +53,12 @@
         </main>
 
         <footer>
-            <p>&copy; 2025 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
+            <p>&copy; 2026 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
+            <div class="webring">
+                <iframe src="https://waisi.live/embed/andy?text_color=%236b665f&amp;link_color=%23b4502a&amp;border_color=%23e6e0d6&amp;font_size=13px"
+                        title="waisi.live webring"
+                        loading="lazy"></iframe>
+            </div>
         </footer>
     </div>
     <label class="toggle" aria-label="Toggle dark mode">
@@ -60,13 +66,31 @@
         <span class="slider"></span>
     </label>
     <script>
+        // The webring widget lives in a cross-origin iframe, so it cannot read
+        // the .dark class. Its colours are baked into the src as query params,
+        // which means the src has to be swapped when the theme changes. The
+        // light URL is in the markup statically so the ring checker can find it.
+        const WEBRING = {
+            light: 'https://waisi.live/embed/andy?text_color=%236b665f&link_color=%23b4502a&border_color=%23e6e0d6&font_size=13px',
+            dark: 'https://waisi.live/embed/andy?text_color=%23a39c91&link_color=%23e0915f&border_color=%23322e29&font_size=13px'
+        };
+
+        function syncWebring(dark) {
+            const frame = document.querySelector('.webring iframe');
+            if (!frame) return;
+            const next = dark ? WEBRING.dark : WEBRING.light;
+            if (frame.src !== next) frame.src = next;
+        }
+
         function toggleTheme() {
             const dark = document.body.classList.toggle('dark');
             localStorage.setItem('theme', dark ? 'dark' : 'light');
+            syncWebring(dark);
         }
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark');
             document.querySelector('.toggle input').checked = true;
+            syncWebring(true);
         }
     </script>
 </body>

@@ -28,29 +28,33 @@
                     one too!</p>
             </div>
 
-            <p class="now-meta"><strong>Last Updated:</strong> June 20, 2026. Sitting at my desk after getting a full body massage.</p>
+            <p class="now-meta"><strong>Last Updated:</strong> September 2, 2026. Coworking with my great friends :)</p>
 
             <div class="now-section">
                 <h3>Recent updates</h3>
                 <ul>
-                    <li>Wrote a post on how <a href="https://www.lesswrong.com/posts/iMds4tTpMH4pSHEej/several-frontier-models-are-substantially-prefill-aware" target="_blank">several frontier models are substantially prefill-aware</a>!</li>
-                    <li>Left METR! Still feeling sad about it, but it's time to move on.</li>
-                    <li>Figuring out where to go next career-wise. Making choices is always hard, but it's a great problem to have!</li>
-                    <li>Sorting out housing logistics. Hopefully we can figure this out quickly, or else we'll be homeless in July...</li>
+                    <li>Working at home while waiting for my Constellation application to go through. I finally have a chance to cook myself!</li>
+                    <li>Joined Safe AI Forum to do US-China coordination! I think the world needs me here instead of doing technical research.</li>
+                    <li>Absolutely mindblown by the HuggingFace x OpenAI Incident. I can't believe OpenAI did not notice there was a agent comment board for months!</li>
+                    <li>Went to World AI Conference in Shanghai in July and talked to a lot of Chinese technical researchers there!</li>
                 </ul>
 
                 <h3>What's on my mind right now?</h3>
                 <ul>
-                    <li>I've been thinking a lot about my mental state. I crash out easily and I want to fix this.</li>
-                    <li>I feel very confused thinking about x-risk in China. How big is the loss-of-control risk there? Should I work on this?</li>
-                    <li>Imposter syndrome and confidence issues still persist. Going on walks and talking to friends has been really helpful!</li>
-                    <li>Feeling grateful as ever to have such a great community around me. I love you all!</li>
+                    <li>I can't believe it's already September. It felt like the past 3 months went by particularly quickly.</li>
+                    <li>Incidents Incidents Incidents! I think this is a great opportunity to bridge concensus between US and China. Gotta start working on this!</li>
+                    <li>There are rumors that GPT Astra is a looped transformer. Very disappointed that they decided to trade off monitorability when they were the people that was stressing about CoT monitoring back then.</li>
                 </ul>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
+            <p>&copy; 2026 Andy Wang. <a href="#" class="party-link" onclick="document.body.classList.toggle('party');return false">party?</a></p>
+            <div class="webring">
+                <iframe src="https://waisi.live/embed/andy?text_color=%236b665f&amp;link_color=%23b4502a&amp;border_color=%23e6e0d6&amp;font_size=13px"
+                        title="waisi.live webring"
+                        loading="lazy"></iframe>
+            </div>
         </footer>
     </div>
     <label class="toggle" aria-label="Toggle dark mode">
@@ -58,13 +62,31 @@
         <span class="slider"></span>
     </label>
     <script>
+        // The webring widget lives in a cross-origin iframe, so it cannot read
+        // the .dark class. Its colours are baked into the src as query params,
+        // which means the src has to be swapped when the theme changes. The
+        // light URL is in the markup statically so the ring checker can find it.
+        const WEBRING = {
+            light: 'https://waisi.live/embed/andy?text_color=%236b665f&link_color=%23b4502a&border_color=%23e6e0d6&font_size=13px',
+            dark: 'https://waisi.live/embed/andy?text_color=%23a39c91&link_color=%23e0915f&border_color=%23322e29&font_size=13px'
+        };
+
+        function syncWebring(dark) {
+            const frame = document.querySelector('.webring iframe');
+            if (!frame) return;
+            const next = dark ? WEBRING.dark : WEBRING.light;
+            if (frame.src !== next) frame.src = next;
+        }
+
         function toggleTheme() {
             const dark = document.body.classList.toggle('dark');
             localStorage.setItem('theme', dark ? 'dark' : 'light');
+            syncWebring(dark);
         }
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark');
             document.querySelector('.toggle input').checked = true;
+            syncWebring(true);
         }
     </script>
 </body>
