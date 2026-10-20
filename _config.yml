@@ -31,6 +31,7 @@ i18n_dir: :lang
 skip_render:
   - index.html
   - now/**
+  - meet/**
   - css/professional.css
 
 # Writing

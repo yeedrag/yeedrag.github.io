@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* ------------------------------------------------------------------ *
  * Warm humanist theme. Edit the variables below to retune everything. *
@@ -36,6 +36,7 @@ body {
     color: var(--text);
     font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 17px;
+    font-weight: 500;
     line-height: 1.65;
     font-feature-settings: "ss01", "cv05";
     -webkit-font-smoothing: antialiased;
@@ -193,13 +194,6 @@ section {
 /* Experience — narrative, not a resume grid ------------------------ */
 .experience-item {
     margin-bottom: 1.6rem;
-    padding-left: 1.1rem;
-    border-left: 2px solid var(--rule);
-    transition: border-color 0.2s ease;
-}
-
-.experience-item:hover {
-    border-left-color: var(--accent);
 }
 
 .experience-item:last-child {
@@ -297,11 +291,7 @@ section {
 .now-meta {
     font-size: 0.95rem;
     color: var(--muted);
-    margin-bottom: 1.5rem;
-    padding: 0.75rem 1rem;
-    border-left: 2px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 6%, transparent);
-    border-radius: 0 4px 4px 0;
+    margin-bottom: 2rem;
 }
 
 .now-section h3 {
@@ -335,6 +325,12 @@ section {
     position: absolute;
     left: 0;
     color: var(--faint);
+}
+
+/* Meet page ------------------------------------------------------- */
+.meet-option h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.15rem;
 }
 
 /* Divider ---------------------------------------------------------- */
@@ -482,4 +478,8 @@ body.dark.party {
     body { font-size: 16px; }
     h1 { font-size: 1.7rem; }
     .container { padding: 0 1.25rem; }
+    /* Logo above the links so five links fit; toggle moves out of their way */
+    nav { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+    .nav-links { gap: 1.1rem; }
+    .toggle { top: auto; bottom: 1.25rem; right: 1.25rem; }
 }
